@@ -1,13 +1,8 @@
-lines = [int(line) for line in open("input","r").readlines()]
 
-current_window = sum(lines[0:3])
-total = 0
+depths = [int(line) for line in open("input","r").readlines()]
 
-for i in range(len(lines) - 2):
-    window = sum(lines[i:i+3])
-    if window > current_window:
-        total += 1
-    current_window = window
-   
+windows = zip(depths, depths[1:],depths[2:])
 
-print(total)
+sums = [sum(thing) for thing in windows]
+
+print(len([(i,j) for (i,j) in zip(sums, sums[1:]) if i < j]))

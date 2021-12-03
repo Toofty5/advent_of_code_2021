@@ -1,9 +1,7 @@
 values = [ int(line, 2) for line in open("input","r").readlines()]
 
-
 for i in reversed(range(12)):
-    sig_bits = [(val>>i & 1) for val in values]
-    bit_sum = sum(sig_bits)
+    bit_sum = sum([(val>>i & 1) for val in values])
 
     if bit_sum >= len(values)/2:
         values = [val for val in values if val>>i & 1 == 1]
@@ -20,9 +18,7 @@ oxygen = values[0]
 values = [ int(line, 2) for line in open("input","r").readlines()]
 
 for i in reversed(range(12)):
-    sig_bits = [(val>>i & 1) for val in values]
-    
-    bit_sum = sum(sig_bits)
+    bit_sum = sum[(val>>i & 1) for val in values]()
 
     if bit_sum < len(values)/2:
         values = [val for val in values if val>>i & 1 == 1]

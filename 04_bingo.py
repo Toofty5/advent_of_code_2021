@@ -10,8 +10,7 @@ def winner(board):
         if (    sum(board[i,:]) == -5 or 
                 sum(board[:,i]) == -5 ):
             return True
-        else:
-            return False
+    return False
 
 win = False
 for called_num in draw_nums:

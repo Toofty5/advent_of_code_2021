@@ -22,15 +22,20 @@ for called_num in draw_nums:
 
         check_boards[i] = np.where(check_boards[i] == called_num, -1, check_boards[i])
 
-        if winner(check_boards[15]):
-
-            if i in remaining:
-                remaining.remove(i)
+        if winner(check_boards[i]):
+            if i == 15:
+                print("LAST WINNER")
+                zeroed = np.where(check_boards[i] == -1, 0, check_boards[i])
+                print(zeroed)
+                print(called_num, np.sum(zeroed))
+                print( f"Answer {called_num * np.sum(zeroed)}")
+                
 
 
             if len(remaining) == 1:
                 print(remaining)
                 print(check_boards[remaining[0]])
-                print(np.sum(check_boards))
-                break
 
+            if i in remaining:
+                remaining.remove(i)
+            

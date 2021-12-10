@@ -30,8 +30,6 @@ def edge(coords):
         
     return adj
 
-
-
 for (x,y),val in np.ndenumerate(val_array):
 
     adjacents = edge((x,y))
@@ -40,16 +38,10 @@ for (x,y),val in np.ndenumerate(val_array):
         total += val + 1
         low_points.append((x,y))
 
-# basins tracks coords
-# basin_map tracks basin that each point belongs to
-
 basins = {}
-basin_map = np.ndarray(val_array.shape)
-basin_map.fill(-1)
 
 for lp in low_points:
     basins[lp] = [lp]
-
     queue = [lp]
 
     while queue != []:
@@ -60,18 +52,16 @@ for lp in low_points:
                 basins[lp].append((x,y))
                 queue.append((x,y))
 
-for key in basins:
-    print(basins[key], len(basins[key]))
-
 top3 = [0,0,0]
 
 for key in basins:
     top3.append(len(basins[key]))
     top3.remove(min(top3))
 
-print(top3)
 answer = 1
 for i in top3:
     answer *= i
+
+print(top3)
 print(answer)
 

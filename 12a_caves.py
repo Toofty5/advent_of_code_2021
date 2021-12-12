@@ -15,30 +15,28 @@ for a,b in lines:
 for node in node_dict:
     print(node, node_dict[node])
 
-def traverse(visited, start_node): # return list of lists
-    print(visited, start_node)
+def traverse(visited, start_node, small_cave): # return list of lists
+    print(visited, start_node, small_cave)
     if start_node == 'end':
         return [['end']]
 
     return_me = []
 
     for link in node_dict[start_node]:
-        if link == "start":
-            continue
+        if link != "start":
+            if link[0].isupper() or link not in visited :
+                next_paths = traverse(visited + [start_node],link, small_cave)
+                for path in next_paths:
+                    return_me.append( [start_node] + path )
+            elif not small_cave: #not upper and is visited
+                next_paths = traverse(visited + [start_node],link, True)
+                for path in next_paths:
+                    return_me.append( [start_node] + path )
 
-        if link not in visited:
-            visited[link] = 0
-
-        if link[0].isupper() or visited[link] < 2 :
-
-            new_start = visited[start_node] + 1 # PROBLEM
-            next_paths = traverse({**visited, start_node:new_start},link)
-            for path in next_paths:
-                return_me.append( [start_node] + path )
 
     return return_me
 
-paths = traverse({"start":0},"start")
+paths = traverse([],"start", False)
 for path in paths:
     print(path)
 print(len(paths))

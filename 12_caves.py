@@ -1,4 +1,4 @@
-lines = [line.strip().split("-") for line in open("input", "r").readlines()]
+lines = [line.strip().split("-") for line in open("input2", "r").readlines()]
 
 node_dict = {}
 

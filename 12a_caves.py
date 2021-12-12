@@ -23,12 +23,16 @@ def traverse(visited, start_node): # return list of lists
     return_me = []
 
     for link in node_dict[start_node]:
+        if link == "start":
+            continue
+
         if link not in visited:
             visited[link] = 0
 
         if link[0].isupper() or visited[link] < 2 :
-            visited[start_node] += 1
-            next_paths = traverse(visited,link)
+
+            new_start = visited[start_node] + 1 # PROBLEM
+            next_paths = traverse({**visited, start_node:new_start},link)
             for path in next_paths:
                 return_me.append( [start_node] + path )
 

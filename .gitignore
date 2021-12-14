@@ -1,5 +1,4 @@
-input
-input2
+input*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -16,7 +16,7 @@ for node in node_dict:
     print(node, node_dict[node])
 
 def traverse(visited, start_node, small_cave): # return list of lists
-    print(visited, start_node, small_cave)
+#    print(visited, start_node, small_cave)
     if start_node == 'end':
         return [['end']]
 
@@ -37,6 +37,4 @@ def traverse(visited, start_node, small_cave): # return list of lists
     return return_me
 
 paths = traverse([],"start", False)
-for path in paths:
-    print(path)
 print(len(paths))

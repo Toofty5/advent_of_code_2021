@@ -15,8 +15,8 @@ dots = np.zeros((len0,len1))
 
 def print_dots(a):
     print(np.sum(a))
-    for line in a:
-        print([1 if tf else 0 for tf in line])
+    for line in np.rot90(np.transpose(a), k=2):
+        print(''.join(['1 ' if tf else '  ' for tf in line]))
 
 for (x,y) in coords: # DON'T FORGET ROW/COL VS X/Y!!!!!!!!!!!
     dots[x][y] = 1

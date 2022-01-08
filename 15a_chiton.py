@@ -7,9 +7,6 @@ cost_array = np.zeros(topo_array.shape)
 INF = 999
 cost_array.fill(INF)
 
-print(topo_array)
-
-
 
 def main() :
     start_node = (NUM_ROWS-1, NUM_COLS-1)
@@ -20,22 +17,36 @@ def main() :
     while queue != []:
         
         this_node = queue.pop(0)
-        neighbors = get_neighbors(this_node)
+        queue.extend(unvisited_neighbors(this_node))
 
-        for next_node in neighbors:
+        for next_node in neighbors(this_node):
             build_topo(next_node, cost_array[this_node])
-
-        queue.extend(neighbors)
-
-
-        
-        
-    
-
+    print(topo_array)
     print(cost_array)
+    print(topo_array.shape)
+    print("don't forget to subtract the cost of the first node!")
 
-def get_neighbors(this_node):  # return UNVISITED neighbors
-    
+def neighbors(this_node):  # return VISITED neighbors
+    this_row,this_col = this_node
+    neighbors = []
+
+    if this_row > 0: 
+        up = (this_row - 1, this_col)
+        neighbors.append(up)
+    if this_row < NUM_ROWS - 1:
+        down = (this_row + 1, this_col)
+        neighbors.append(down)
+    if this_col > 0:
+        left = (this_row, this_col - 1)
+        neighbors.append(left)
+    if this_col < NUM_COLS - 1:
+        right = this_row, this_col + 1
+        neighbors.append(right)
+
+    neighbors.sort(key = lambda x: topo_array[x]) 
+    return neighbors
+
+def unvisited_neighbors(this_node):  # return UNVISITED neighbors
     this_row,this_col = this_node
     neighbors = []
 
@@ -55,7 +66,6 @@ def get_neighbors(this_node):  # return UNVISITED neighbors
         right = this_row, this_col + 1
         if cost_array[right] == INF:
             neighbors.append(right)
-    
 
     neighbors.sort(key = lambda x: topo_array[x]) 
     return neighbors
@@ -63,7 +73,8 @@ def get_neighbors(this_node):  # return UNVISITED neighbors
 
 def build_topo(this_node, cost_so_far):
     new_cost = topo_array[this_node] + cost_so_far
-    cost_array[this_node] = new_cost
+    if(cost_array[this_node] > new_cost):
+        cost_array[this_node] = new_cost
 
 
     

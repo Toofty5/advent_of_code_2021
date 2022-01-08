@@ -13,8 +13,24 @@ print(topo_array)
 
 def main() :
     start_node = (NUM_ROWS-1, NUM_COLS-1)
+    cost_array[start_node] = topo_array[start_node]
 
-    build_topo(start_node, 0)
+    queue = [start_node]
+
+    while queue != []:
+        
+        this_node = queue.pop(0)
+        neighbors = get_neighbors(this_node)
+
+        for next_node in neighbors:
+            build_topo(next_node, cost_array[this_node])
+
+        queue.extend(neighbors)
+
+
+        
+        
+    
 
     print(cost_array)
 
@@ -39,7 +55,9 @@ def get_neighbors(this_node):  # return UNVISITED neighbors
         right = this_row, this_col + 1
         if cost_array[right] == INF:
             neighbors.append(right)
+    
 
+    neighbors.sort(key = lambda x: topo_array[x]) 
     return neighbors
 
 
@@ -47,15 +65,6 @@ def build_topo(this_node, cost_so_far):
     new_cost = topo_array[this_node] + cost_so_far
     cost_array[this_node] = new_cost
 
-    neighbors = get_neighbors(this_node)
-    
-    neighbors.sort(key = lambda x: topo_array[x]) 
-    
-    if neighbors ==[]:
-        return
-
-    for nei in neighbors:
-        cost_array[nei] = new_cost + topo_array[nei]
 
     
 if __name__ == "__main__" :

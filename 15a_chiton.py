@@ -4,8 +4,9 @@ val_arr = np.array([[int(char) for char in line.strip()] for line in open("input
 NUM_ROWS, NUM_COLS = val_arr.shape
 
 topo_array = np.zeros(val_arr.shape)
-topo_array.fill(9999)
-print(topo_array)
+INF = 9999
+topo_array.fill(INF)
+print(val_arr)
 
 
 
@@ -13,12 +14,17 @@ def main() :
     start_node = (NUM_ROWS-1, NUM_COLS-1)
 
     build_topo(start_node, 0)
+    print(topo_array)
 
 
 def build_topo(this_node, cost_so_far):
-    this_row,this_col = this_node
+    new_cost = val_arr[this_node] + cost_so_far
+    topo_array[this_node] = new_cost
+    
 
+    this_row,this_col = this_node
     neighbors = []
+
     if this_row > 0: 
         up = (this_row - 1, this_col)
         neighbors.append(up)
@@ -32,17 +38,11 @@ def build_topo(this_node, cost_so_far):
         right = this_row, this_col + 1
         neighbors.append(right)
 
-    print(neighbors)
+    neighbors.sort(key = lambda x: val_arr[x]) 
 
-
-    new_cost = val_arr[this_row][this_col] + cost_so_far
-
-    if topo_array[this_row][this_col] == 0:
-        topo_array[this_row][this_col] = new_cost
-    else:
-        pass
-        
-
+    for nei in neighbors:
+        if topo_array[nei] == INF:
+            build_topo(nei, new_cost)
     
 if __name__ == "__main__" :
     main()

@@ -1,6 +1,6 @@
 import numpy as np
 
-topo_array = np.array([[int(char) for char in line.strip()] for line in open("input2","r").readlines()])
+topo_array = np.array([[int(char) for char in line.strip()] for line in open("input","r").readlines()])
 NUM_ROWS, NUM_COLS = topo_array.shape
 
 cost_array = np.zeros(topo_array.shape)
@@ -18,7 +18,8 @@ def main() :
     while queue != []:
         #print(np.array(list(zip(topo_array[:10,:10], cost_array[:10,:10]))))
         this_node = queue.pop(0)
-        queue.extend(unvisited_neighbors(this_node))
+        
+        queue.extend(heavier_neighbors(this_node))
 
         for next_node in neighbors(this_node):
             build_topo(next_node, cost_array[this_node])
@@ -45,8 +46,8 @@ def neighbors(this_node):  # return VISITED neighbors
     #neighbors.sort(key = lambda x: topo_array[x]) 
     return neighbors
 
-def unvisited_neighbors(this_node):  # return UNVISITED neighbors
-    return [nei for nei in neighbors(this_node) if cost_array[nei] == INF]
+def heavier_neighbors(this_node):  # return HEAVIER neighbors
+    return [nei for nei in neighbors(this_node) if cost_array[nei] > cost_array[this_node]+ topo_array[nei]]
 
 
 # replace item in cost_array if new cost is cheaper.
